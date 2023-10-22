@@ -5,30 +5,22 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version: 3.2.1
 
-* System dependencies
+* Rails version: 7.0.8
 
-* Configuration
+* Database used is postgres. Ideally PG v14.
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Installation steps
+- `cd vehicle-reservation-api`
+- `bundle install`
+- `rake db:create`
+- `rake db:migrate`
+- `rake db:seed`
+- `bundle exec rspec`
+- `rails s`
 
 ## Challenge Summary
-
-St Charles Automotive would like to begin taking service reservations over the phone. Their current software does not allow them to capture all of the information in a single step, so would like to build a custom solution.
-
-
-## Requirements
 
 Construct a simple reservation API, that allows an agent to capture customer information, vehicle information, and secure a time slot. Feel free to use any gems that compliment your solution. Additionally include a readme file in your delivery, should include instructions on how to setup and run your project and unit tests that demonstrate functionality.
 
@@ -36,18 +28,24 @@ You do not need to construct a UI, this is intended to be an assessment of your 
 
 We are leaving the details intentionally vague, curious to see the assumptions you make and how you interpret the requirements.
 
-- VehicleReservation
-- Agent
-- Customer
-- Vehicle
+## Supported vehicle makes and models
 
---------------
+I thought it would be fun to add some restrictions to this API and prevent requests from getting weird vehicle models and vehicle manufactures so I'm using this faker datasets for vehicle makes and models as a source of thruth. https://github.com/faker-ruby/faker/blob/main/lib/locales/en/vehicle.yml#L123
 
-An agent is going to submit a post request to the API with the time of the reservation, the vehicle information and the custom information. With this, if there is an spot available secure the spot.
+This API only supports makes defined in the `models_by_make` section and their corresponding models just for fun and to incorporate the idea that we will still need to make sure we don't receive bad data in the params.
 
-- Endpoint to reserve a time.
-- Endpoint to retrieve reservations by user's email.
-- API authentication will be the agent code. If no agent is found with the agent code sent. The API will give an unathorization header.
+## Agents and agent codes
 
-- Dont forget the seeder
-- Don't forget the rspecs
+In order to add some sort of authentication I decided to incorporate the idea of `agent_code` in the Agent model. This serves as an authentication layer and will only process requests of valid agents and their agent codes. You can pass this as a query parameteres. Ex: `http::localhost:3000/api/v1/reservations?agent_code=38292`
+
+## Business hours
+
+I also thought that `St Charles Automotive` will not be working 24/7 so I made the business hours to be Mon - Sunday from 8AM to 5PM
+
+## Overlapping reservations
+
+I created the constraint that a reservation cannot be created if another reservation already exists during the time the new reservation wants to be created. For instance if a reservation was created to be from 1 PM to 2 PM then another reservation cannot be created to start at 1:30 PM because the other reservation is still going.
+
+## Documentation
+
+The documentation for this API can be found here https://documenter.getpostman.com/view/30658761/2s9YRCVAco

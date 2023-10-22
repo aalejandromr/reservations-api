@@ -1,3 +1,4 @@
+# The purpose of this calss is the capture the exceptions created across the app and respond with an appropiate json describing the errors
 module ExceptionHandler
   extend ActiveSupport::Concern
 

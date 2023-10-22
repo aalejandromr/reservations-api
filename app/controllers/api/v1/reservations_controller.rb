@@ -23,6 +23,7 @@ module Api::V1
     end
 
     def reservation_params
+      # Reservation time, vehicle make, model and year are all required to be able to create a reservation
       params.permit(
         reservation_time: Parameters.time.required, 
         vehicle_make: Parameters.string.required, 

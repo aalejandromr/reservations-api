@@ -12,7 +12,7 @@ Things you may want to cover:
 * Database used is postgres. Ideally PG v14.
 
 ## Installation steps
-- `cd vehicle-reservation-api`
+- `cd reservations-api-main`
 - `bundle install`
 - `rake db:create`
 - `rake db:migrate`
@@ -36,7 +36,9 @@ This API only supports makes defined in the `models_by_make` section and their c
 
 ## Agents and agent codes
 
-In order to add some sort of authentication I decided to incorporate the idea of `agent_code` in the Agent model. This serves as an authentication layer and will only process requests of valid agents and their agent codes. You can pass this as a query parameteres. Ex: `http::localhost:3000/api/v1/reservations?agent_code=38292`
+In order to add some sort of authentication I decided to incorporate the idea of `agent_code` in the Agent model. This serves as an authentication layer and will only process requests of valid agents and their agent codes. You can pass this as a query parameteres. Ex: `http::localhost:3000/api/v1/reservations?agent_code=28392`
+
+In the seeder there are 2 agents created. You can find an already existing valid agent code in seeds.rb:4
 
 ## Business hours
 
@@ -45,6 +47,12 @@ I also thought that `St Charles Automotive` will not be working 24/7 so I made t
 ## Overlapping reservations
 
 I created the constraint that a reservation cannot be created if another reservation already exists during the time the new reservation wants to be created. For instance if a reservation was created to be from 1 PM to 2 PM then another reservation cannot be created to start at 1:30 PM because the other reservation is still going.
+
+## Seeder
+
+All data required to run the API is already created for you. Please refer to the seeds.rb file if you have questions related to the data.
+
+For initial API interactions you can find a valid agent code there as well as a customer email valid.
 
 ## Documentation
 

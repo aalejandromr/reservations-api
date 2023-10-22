@@ -1,6 +1,7 @@
 class Seeder
 
   SEED_MODELS = [Reservation, Agent, Customer]
+  AGENT_CODES = [28392, 29302]
 
   def call
     raise 'Seeder cannot be run in production' if Rails.env.production?
@@ -22,17 +23,17 @@ class Seeder
 
   def seed_customers
     Customer.create!(
-      email: Faker::Internet.email,
+      email: 'customer@example.com',
       phone_number: Faker::PhoneNumber.cell_phone
     )
   end
 
   def seed_agents
-    Array.new(2).each {
+    Array.new(2).each_with_index { |_, key|
       Agent.create!(
         first_name: Faker::Name.first_name,
         last_name: Faker::Name.last_name,
-        agent_code: Faker::Number.number(digits: 6)
+        agent_code: AGENT_CODES[key]
       )
     }
   end
